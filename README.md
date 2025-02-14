@@ -1,7 +1,7 @@
 # Amiga GfxCon - Image Format Converter
 
 This is the source code of the GfxCon image format converter that I started writing in 1993.
-The [latest version on AmiNet](https://aminet.net/package/gfx/conv/gfxcon) is v1.8c from 1997, but this code appears to be v1.8f with
+The [latest version on AmiNet](https://aminet.net/package/gfx/conv/gfxcon) is v1.8c from 1997, but this source code appears to be v1.8f with
 a few minor fixes and adding the strange CVP image format, which I completely forgot about.
 
 At that time, I used the SAS 6.50 C compiler. I have not tried to compile it since then.
