@@ -1,0 +1,1126 @@
+@DATABASE GfxCon
+@AUTHOR Dirk Farin
+@NODE MAIN "Inhaltsübersicht"
+
+   GfxCon - Grafikkonverter
+  ==========================
+
+      V1.8d (12 November 1997)
+
+	 Dirk Farin
+
+
+  Einführung
+  ----------
+  @{" Was kann GfxCon ? " link FEATURE_POSTER}
+  @{" Was ist neu ?     " link NEWS          }
+  @{" Bemerkungen       " link REMARKS       }
+  @{" Bugs ?            " link BUGS          }
+
+  Installation
+  ------------
+  @{" Systemanforderungen " link REQUIREMENTS}
+  @{" Installation        " link INSTALLATION}
+
+  Bedienung
+  ---------
+  @{" Einstellen der Dateinamen     " link FILENAMES}
+  @{" Einstellen des Ausgabeformats " link SELECT_OUT_FORMAT }
+  @{" Verändern der Bildgeometrie   " link GEOMETRY }
+  @{" Verändern der Farben          " link COLORS}
+  @{" Ablauf der Konvertierung      " link CONVERT_PROCESS}
+  @{" Informationen zum Eingabebild " link INPUT_INFORMATION}
+  @{" Benutzen als Shell-Befehl      NEU" link SHELL}
+
+  Referenz
+  --------
+  @{" Unterstützte Formate " link SUPPORTED_FORMATS}
+  @{" Probleme ?           " link PROBLEMS         }
+
+  @{" Über das Programm " link PRG_INFOS}
+  @{" Copyright         " link COPYRIGHT}
+  @{" (Registrierung)   " link REGISTER}
+@ENDNODE
+
+@REMARK =========================================================================
+
+@NODE FEATURE_POSTER "Funktionszusammenfassung"
+
+ Was kann GfxCon ?
+ =================
+
+ GfxCon ermöglicht ein anwenderfreundliches Umwandeln der  gebräuchlichsten
+ Grafikformate.  Es wurde besonderen Wert auf die leichte Bedienbarkeit und
+ eine hohe Ausgabequalität gelegt.
+
+ Außerdem sind mit GfxCon zahlreiche Veränderungen des Bildes möglich,	wie
+ z.B. Veränderung der Auflösung, des Kontrastes und zahlreiche Farbeffekte.
+
+@ENDNODE
+@NODE NEWS "Neuigkeiten"
+
+ Neuigkeiten:
+ ------------
+
+ Version 1.8d
+
+   - pure JPEG-Streams, die nicht in JFIF-Files eingeschlossen sind,
+     wie sie z.B. von der Digital Kamera Sony MVC-FD7 erzeugt werden,
+     werden jetzt auch geladen.
+   - Etwas mehr Infos zu JPEG-Files
+
+ Version 1.8c
+
+   - der GIF-Loader gerät bei fehlerhaften Bildern nicht mehr in
+     eine Endlosschleife
+   - 24bit-BMP Bilder mit ungerader Breite werden jetzt richtig geladen
+
+ Version 1.8b
+
+   - 24bit-BMP Loader
+   - der beste Filemode fuer das Speichern wird nun automatisch gewaehlt
+     (d.h. ein JPEG wird (wenn moeglich) als 24bit-Bild gespeichert)
+   - BOXFITALL funktioniert jetzt / Enforcerhit in BOXFIT/BOXFITALL entfernt
+
+ Version 1.8
+
+   - Mehr TIFF-Bilder können gelesen werden. Insbesondere LZW-komprimierte
+     Bilder werden nun unterstützt.
+   - 24bit-PCX-Bilder (Version 5) können nun geladen werden
+   - bekannte Bugs in den TIFF,PCX und BMP-Loadermodulen entfernt
+     (korrekte BMPs wurden faelschlicherweise als kaputt erkannt,
+      bei TIFF-Bildern wurde teilweise ueber das Ende hinausgelesen)
+   - Neue Shellkommandos: CROP, CENTERBOX, OFFSET, SORTDIR, UNUSED,
+			  RESIZEH, RESIZEV
+
+ Version 1.7
+
+   - Auch RGB-Raw Ein- und Ausgaben sowie Helligkeits- und Kontrast-
+     änderungen über die Shell möglich
+   - Per Default gibt: Ausgabeformat = Eingabeformat in der Shell
+   - Die Transparente Farbe (GIF89a) wird nun auch geladen und gespeichert
+   - Damit auch Guru bei fehlerhafter Eingabedatei beseitigt
+   - Progress-Anzeige in der Shell kann unterdrückt werden
+
+ Version 1.6
+
+   - Zwei Möglichkeiten, die Größe proportional zu ändern (nur Shell)
+   - Bildinfos können auch aus der Shell angefordert werden
+
+ Version 1.5
+
+   - Nun als Shell-Kommando benutzbar
+   - speichert die Hintergrundfarbe, wenn bekannt (ILBM<->GIF)
+     manuelles Ändern nur über Shell-Parameter
+   - läuft nun auch unter Kick 1.2 :)  (aber nur in der Shell)
+   - Bug beseitigt: Bildgeometrie verändern und gleichzeitig GIF-Speichern war
+		    fehlerhaft.
+
+ Version 1.4
+
+   - Bug in PCX-Lesen entfernt (Bilder mit ungerader Anzahl Bytes pro Zeile)
+   - Bug in PCX-Schreiben entfernt (BytesPerRow im PCX-Header wurde falsch gesetzt !)
+   - 68020-Version braucht keinen 68881 mehr (die IEEE-Libraries werden benutzt).
+
+ Version 1.3
+
+   - HAM6 funktioniert jetzt wieder
+   - besserer virtueller Speicher (neue Tooltypes)
+   - TIFF-RGB-Bilder und Bug-fix
+
+ Version 1.2
+
+   - HAM8 Modus (endlich)
+   - Targa-CLUT-Bilder
+@ENDNODE
+
+@REMARK =========================================================================
+
+@NODE REMARKS "Bemerkungen"
+
+ GfxCon ist schon vor längerer Zeit geschrieben worden (vor dem  Erscheinen
+ von  WB2.1).  Deshalb	wurde  die Anpassung an die jeweilige Landessprache
+ anders gelöst (mit Tooltypes anstatt über Catalogs).  Auch  werden  leider
+ keinen  Datatypes unterstützt. Daher läuft das Programm aber auch noch mit
+ WB2.04! ;)    (ab V1.5 sogar ab Kick 1.2 !)
+
+ Da eine Anpassung des	Programms  an  diese  neuen  Möglichkeiten  derzeit
+ meinen  zeitlichen Freiraum sprengen würde, ist wohl kaum mit einem Update
+ zu rechnen, eher mit einem völlig neuen,  aber  auch  noch  viel  besseren
+ Programm. @{"Siehe auch hier..." link PRG_INFOS}
+@ENDNODE
+
+@REMARK =========================================================================
+
+@NODE BUGS "Bugs"
+
+ Bekannte Bugs:
+
+  - Manchmal ändernt sich die Schriftart in  einem  der  Schalter  völlig
+    "ohne Grund". Daraus resultiert aber keine Funktionsbeeinträchtigung.
+
+
+ Wenn Sie einen Fehler im Programm  gefunden  haben,  bitte  ich  Sie,	mir
+ diesen  mitzuteilen. Ich kann allerdings nicht garantieren, daß ich diesen
+ Fehler immer entfernen kann, da das Programm nun schon fast  2  Jahre	(!)
+ bei mir unverändert rumliegt.
+
+ @{"Meine Adresse" link PRG_INFOS}
+@ENDNODE
+
+@REMARK =========================================================================
+
+@NODE REQUIREMENTS "Systemanforderungen"
+
+ Systemanforderungen
+ ===================
+
+ Vorraussetzung für das Programm ist:
+
+   Kickstart 1.2
+   20000 Bytes Stack
+
+
+ Für ein vernünftiges Arbeiten:
+
+   Mindestens ein 68020 Prozessor!
+   @{"4 MB Speicher" link MEMORYUSAGE}
+   @{"Festplatte   " link VIRTUAL_MEMORY}
+@ENDNODE
+
+@REMARK =========================================================================
+
+@NODE INSTALLATION "Installation"
+
+ Installation
+ ============
+
+ Zum Installieren des Programms ziehen Sie einfach die	Schublade  mit	dem
+ Programm (oder nur das Programm) in das gewünschte Verzeichnis.
+
+ Um   das  Programm  optimal  Ihrem  System  anzupassen,  sollten  Sie	die
+ @{"ToolTypes" link TOOLTYPES} entsprechend abändern.
+
+ Weitere Einstellungen sind @{B}nicht@{UB} nötig.
+@ENDNODE
+
+@REMARK =========================================================================
+
+@NODE SHELL "Benutzen als Shell-Befehl"
+
+GfxCon kann nun (ab Version 1.5) auch als Shell-Befehl benutzt werden. Das
+funktioniert dann sogar mit Kickstart 1.2 (oder niedriger :-)
+
+
+Benutzung:
+
+  GfxCon eingabedatei [TO ausgabedatei] [FORMAT f] [COLORS c] [SIZE x y] [FLIPX] [...]
+
+
+Wird keine Ausgabedatei angegeben, so wird einfach die alte Endung durch die des
+Ausgabeformats ersetzt.
+
+Parameter:
+
+  TO ausgabename   setzt den Ausgabefilename
+  FORMAT	   Ausgabeformat ( aus { ILBM,GIF,PCX,JPEG,Postscript,RGB-Raw } )
+
+  COLORS n	   benutze maximal 'n' Farben
+  DITHER	   benutze Floyd-Steinberg-Rasterung
+  FASTDITHER	   benutze schnelle Floyd-Steinber-Rasterung
+  BACKGROUND n	   benutze Farbe 'n' als Hintergrundfarbe
+  UNUSED r g b	   setzen unbenutzte Farben in der Farbtabelle auf den Wert (r,g,b)
+  OFFSET n	   Lasse die ersten n Farbeinträge der Farbtabelle unbenutzt (s.u.)
+  SORTDIR dir	   sortiere die Farben in der Farbtabelle
+		   (1 aufwärts/-1 abwärts) (s.u.)
+
+  CROP x1 y1 x2 y2 Schneide den angegebenen Ausschnitt aus dem Bild aus.
+  SIZE x y	   Verändere die Bildgröße
+  RESIZE f	   Verändere die Größe um den Faktor f (f>0 muß gelten)
+  RESIZEH f	   Verändere die Breite um den Faktor f
+  RESIZEV f	   Verändere die Höhe	um den Faktor f
+  BOXFIT w h	   Verkleinertz das Bild proportional soweit, daß das Bild gerade noch
+		   in das angegebene Rechteck paßt.
+  BOXFITALL w h    Wie BOXFIT, allerdings wird hier das Bild ggf. auch vergrößert.
+  CENTERBOX w h r g b	Erzeuge ein Bild der Größe (w,h), zentriere das geladene
+			Bild hierin und fülle den umgebenden Bereich mit der
+			Farbe (r,g,b)
+
+  QUALITY q	   Setze die JPEG-Qualität
+  CLUT		   wähle IFF-CLUT  Modus\
+  HAM			 IFF-HAM   Modus \_ nur mit 'FORMAT ILBM' sinnvoll
+  HAM8			 IFF-HAM8  Modus /
+  24BIT 		 IFF-24bit Modus/
+
+  INVERS	   invertiere die Farben
+  BW		   erzeuge Schwarz-Weiss-Bilder
+  GRAYSCALE	   erzeuge SW-Bilder mit gleichmäßigen Graustufen
+  NORED 	   entferne Rotanteil
+  NOGREEN	   entferne Grünanteil
+  NOBLUE	   entferne Blauanteil
+
+  BRIGHTNESS n	   verändere Helligkeit um n (255 um schwarz nach weiss zu schieben)
+  CONTRAST	   n ändert den Kontrast um n (Prozent)
+
+  FLIPX 	   spiegele horizontal
+  FLIPY 	   spiegele vertikal
+  ROTATELEFT	   drehe 90 Grad nach links
+  ROTATERIGHT	   drehe 90 Grad nach rechts
+
+  GREEN n	setze den Namen der Grün-RGB-raw-Datei (nur bei RGB-Raw)
+  BLUE n	setze den Namen der Blau-RGB-raw-Datei (nur bei RGB-Raw)
+  INPUTWIDTH n	zwinge die Eingabebreite auf 'n' Pixel (nur bei RGB-Raw)
+
+  INFO		   zeige nur die Bildinformationen an
+  NOPROGRESS	   zeige nicht die Zeilennummern während der Konvertierung
+  HELP / -help / -h / ? / -?   diese Erklärung in Englisch :-)
+
+
+Bemerkung:
+
+  Das Shell-Interface wird viel leistungsfähiger, wenn man es mit dem 'foreach'-
+  Programm (von mir; erhältlich z.B. über AmiNet 'util/cli/foreach.lha') kombiniert.
+  Beispiele:
+    Alle IFFs in GIFs konvertieren: foreach #?.iff GfxCon & FORMAT GIF
+    Eine Reihe von JPEGs mit verschiedenen Qualitäten erzeugen:
+      foreach {30,50,70,90} GfxCon Pic.iff TO Pic&.jpg FORMAT JPEG QUALITY &
+
+  Die Shell-Funktionen und die Kick1.2-Unterstützung wurden nachträglich in
+  GfxCon reingemurkst und ist somit alles andere als perfekt. Es ist vor
+  allem dazu gedacht, die Übergangszeit bis zu GfxCon2.0 zu überbrücken und
+  den armen Kick1.2-Leuten auch endlich einen Grafikkonverter zu geben :)
+
+  NEU (v1.8) Benutzung von UNUSED
+	     --------------------
+	       Steht der UNUSED-Parameter nach dem COLORS-Parameter, so
+	       werden die unbenutzten Farben von der Anzahl, die bei
+	       COLORS angegeben wurde abgezogen. Sonst werden sie
+	       hinzugefügt. Das heißt:
+
+		 gfxcon ... COLORS 32 UNUSED 10 ...
+
+	       erzeugt ein Bild mit 32 Farben, wovon die ersten 10 nicht
+	       benutzt werden. Wohingegen
+
+		 gfxcon ... UNUSED 10 COLORS 32 ...
+
+	       ein Bild mit 42 Farben erzeugt.
+
+	       WICHTIG: UNUSED funktioniert nur mit ILBM-Ausgabe. Bei
+			allen anderen Formaten ist die Wirkung undefiniert.
+
+
+	     SORTDIR
+	     -------
+	       Ist der SORTDIR-Parameter gleich 1, so werden die Farben
+	       so sortiert, daß die dunkelste Farbe am Farbtabellenanfang
+	       steht und die hellste am Ende.
+	       Bei dem Parameter -1 ist es genau umgekehrt.
+
+
+	     gleichzeitige Anwendung von CROP/RESIZE/BOXFIT ...
+	     --------------------------------------------------
+	     Die Operatoren, welche die Bildgröße beeinflussen
+	     werden unabhängig von der Reihenfolge der Shell-
+	     Argumente immer in der folgenden Reihenfolge ausgeführt:
+	      1) CROP
+	      2) RESIZE, RESIZEH, RESIZEV
+	      3) SIZE
+	      4) BOXFIT, BOXFITALL
+
+	     Ist ist jeweils nur eins der RESIZE* Kommandos und der
+	     BOXFIT* Kommandos pro Programmlauf erlaubt!
+
+  (v1.7)  RGB-Raw-files lädt man, indem man die Rot-Datei normal als
+	  Eingabedatei angibt und die Grün- und Blau-Dateien mittels
+	  der GREEN und BLUE Parameter. Um also z.B. die Dateien
+	  "pic.red", "pic.green", "pic.blue" zu laden, tippt man:
+
+	    GfxCon pic.red GREEN pic.green BLUE pic.blue   ...
+
+	  Um die Breite zu ändern, die GfxCon für die Eingabe schätzt,
+	  benutzt man den INPUTWIDTH Parameter.
+
+	  Bei RGB-Ausgabe werden die Endungen ".red", ".green" und ".blue"
+	  angehängt. Wenn man den Zieldateinamen mit "TO" angibt, werden
+	  auch hier diese Endungen angehängt.
+
+Achtung:
+
+  Kick1.3 Benutzer koennen KEINE Postscript-Ausgabe benutzen. Sorry!
+@ENDNODE
+@REMARK =========================================================================
+@NODE FILENAMES "Dateinamen eingeben"
+
+ Einstellen der Eingabe- und Ausgabe-Dateinamen
+ ==============================================
+
+ Allgemein
+ ---------
+ Zum Einstellen der Dateinamen gibt es je einen Bereich zum Laden  und	zum
+ Speichern.  Der  Bereich  'Laden' befindet sich links oben und der Bereich
+ 'Speichern' rechts oben. Beide Bereiche sind identisch aufgebaut.
+
+ Tragen Sie den Filenamen in das oberste der drei  Stringgadgets  ein  oder
+ wählen  Sie ihn mit Hilfe eines Filerequesters, der sich durch die Gadgets
+ links neben den String-Gadgets aufrufen läßt.
+
+ Wenn Sie den Eingabe-Dateinamen (im Bereich 'Laden') eingetippt haben  und
+ die  Eingabe  durch  RETURN oder TAB abgeschlossen haben, oder ihn mit dem
+ Filerequester ausgesucht  haben,  dann  versucht  GfxCon  das	Format	der
+ Eingabedatei  zu  erkennen  und  trägt  es  in  das Popup-Gadget unter den
+ Stringgadgets ein.
+
+
+ RGB-Dateien
+ -----------
+ Sollte GfxCon das Eingabeformat nicht erkennen, so nimmt  es  an,  daß  es
+ sich um @{"RGB-Auszüge"  link RGB} handelt. Da dafür drei Eingabedateien vorhanden sind,
+ werden die beiden unteren Stringgadgets aktiviert. In welches	Gadget	man
+ den  Namen  welches  Farbauszugs  schreiben  muß,  steht  rechts neben den
+ String-Gadgets. Tragen Sie dem Dateinamen der Rot-Farbauszugs-Datei  neben
+ R ein, Grün bei G, und Blau bei B.
+@ENDNODE
+@REMARK =========================================================================
+@NODE SELECT_OUT_FORMAT "Ausgabeformat einstellen"
+
+ Ausgabeformat einstellen
+ ========================
+
+ Ausgabeformat wählen
+ --------------------
+ Das @{"Ausgabeformat" link OUTPUT_FORMATS} wählen Sie mit dem Popup-Gadget im Bereich 'Speichern'.
+
+
+ Farbmodus wählen (nur ILBM)
+ ---------------------------
+ Da das @{"ILBM-Format" link ILBM} verschiedene Farbmodi (Farbtabelle, 24 bit, HAM6, HAM8)
+ unterstützt, kann man mit dem Popup-Gadget 'Farbmodus' zwischen CLUT
+ (Color-Lookup-Table / Farbtabelle), 24 bit, HAM6 und HAM8 wählen.
+
+
+ Anzahl der Farben
+ -----------------
+ Die Anzahl der gewünschten Farben tragen Sie im Gadget 'Farben' ein. Hier  sind
+ auch  "krumme"  Werte  wie  28 oder 53 erlaubt. Da viele Grafikformate aber nur
+ 2er-Potenzen  als  Farbanzahl	verarbeiten  können,  rundet  GfxCon   auf   die
+ nächsthöhere  mögliche  Farbanzahl  auf  und läßt die übrigen Farben unbenutzt.
+ (Sollten Sie mehr Farben angeben, als das Format unterstützt, wie z.B. 512  bei
+ PCX, so rundet GfxCon auf 256 ab).
+@ENDNODE
+
+@REMARK =========================================================================
+
+@NODE GEOMETRY "Verändern der Bildgeometrie"
+
+ Verändern der Bildgeometie
+ ==========================
+
+ Verkleinern und Vergrößern
+ --------------------------
+ Im Bereich 'Größe' wählen Sie das Gadget 'ändern'. Daraufhin werden die  beiden
+ Gadgets   'Höhe'   und  'Breite'  aktiviert.  Hier  ist  schon  die  Größe  des
+ Eingabebildes in Pixel eingetragen. Ändern Sie diese Werte in	die  gewünschten
+ ab.
+
+ Wenn Sie ein Bild vergrößern und nicht wollen, daß häßliche Pixel hervortreten,
+ so wählen Sie noch das Gadget 'interpolieren'.  Hiermit  werden  die  Übergänge
+ zwischen  den einzelnen Pixel interpoliert, was zwar die Rechenzeit verlängert,
+ aber bessere Ergebnisse erzeugt.
+
+ HINWEIS: Wenn Sie ein Bild  mit  interpolieren  vergrößern/verkleinern,  müssen
+	  neue	Farben	erzeugt werden. Es macht keinen Sinn ein 2-farbiges Bild
+	  interpoliert zu vergrößern, wenn das Ausgabebild  auch  nur  2  Farben
+	  haben soll.
+
+ ACHTUNG: Zum Vergrößern eines Bildes benötigt das Programm mehr @{"Speicher" link MEMORYUSAGE}
+	  als normal (besonders bei der interpolierten Vergrößerung).
+
+
+ Spiegeln des Bildes:
+ --------------------
+ Das  Bild  kann  sowohl  horizonal  als  auch	vertikal  oder	beides	zugleich
+ (entspricht  einer  Drehung um 180 Grad) gespiegelt werden. Das PopupGadget für
+ den Spiegel-Modus befindet sich im Bereich 'umformen'.
+
+
+ Drehen des Bildes:
+ ------------------
+ Das Bild kann um 90 Grad (gegen den Uhrzeigersinn) oder um -90  Grad  (mit  dem
+ Uhrzeigersinn)  gedreht  werden.  Das	Popup-Gadget  befindet	sich  im Bereich
+ 'umformen'.
+
+ ACHTUNG: Zum Drehen eines Bildes benötigt das Programm mehr @{"Speicher" link MEMORYUSAGE}
+	  als normal.
+@ENDNODE
+
+@REMARK =========================================================================
+
+@NODE COLORS "Farben verändern"
+
+ Farben verändern
+ ================
+
+ Helligkeit und Kontrast
+ -----------------------
+ Rechts unten befinden sich die zwei Gadgets,  für Helligkeit  und  Kontrast.  In
+ Helligkeit  können Sie Werte zwischen -256 und +256 eintragen,  dieser Wert wird
+ dann zu der Farbe jedes Pixels addiert. Der Kontrast sollte natürlich größer als
+ 0%  sein.  Ein Wert zwischen 0% und 100% verringert den Kontrast, ein	Wert über
+ 100% erhöht den Kontrast.
+
+ Die Helligkeit wird immer zuerst verändert.
+ D.h.:
+
+  Ausgabe = (Eingabe + Helligkeit) * Kontrast
+
+
+ Effekte
+ -------
+ Es existieren zahlreiche Effekte, die alle mit dem Popup-Gadget 'Effekte'
+ ausgewählt werden können:
+
+   In Schwarz-Weiß umwandeln :	wählen Sie: 'Schwarz/Weiß'
+   Bild invertieren	     :		    'Negativ'
+   Schwarz/Weiß-Negativ      :		    'Negativ & SW'
+
+ Außerdem können einzelne Filter eingeschaltet werden, was heißt, daß  das  Bild
+ so  aussieht,	als  ob  Sie  durch ein farbiges Filter schauen. Dazu gibt es im
+ 'Effekte'-Gadget Filter in den Farben:
+
+   rot, grün, blau, gelb, violett und türkis.
+
+
+ Graustufen
+ ----------
+ Oft will man als Ausgabefarbpalette gleichmäßige Graustufen haben (bzw.  Bilder
+ nur  mit  den	Farben	Schwarz  und Weiß z.B. zum Drucken). Wählen Sie dazu den
+ Punkt 'Graustufen'. Beachten Sie aber, daß dieser Menüpunkt sich nur  dann  auf
+ die Ausgabe auswirkt, wenn Sie ein Bild mit Farbpalette (CLUT) ausgeben.
+
+
+ Bild rastern
+ ------------
+ Dies ist ein sehr  wichtiger  Punkt!  Wenn  Sie  ein  Bild  mit  vielen  Farben
+ (Echtfarbenbilder  usw.)  auf  wenige  Farben reduzieren, treten für gewöhnlich
+ Farbstreifen auf. Um dies zu verhindern kann man aus  den  wenigen  vorhandenen
+ Farben  versuchen, Mischfarben herzustellen, indem man verschiedenfarbige Pixel
+ nebeneinandersetzt, die aus einiger Entfernung betrachtet  den  Eindruck  einer
+ anderen Farbe ergeben.
+
+ GfxCon  verwendet ausschließlich die 'Floyd-Steinberg'-Rasterung, die zwar sehr
+ rechenintensiv  ist,  aber  sehr  gute  Ergebnisse  liefert.  Wählen  Sie   die
+ Floyd-Steinberg-Rasterung mit dem Gadget 'Rastern'.
+@ENDNODE
+
+@REMARK =========================================================================
+
+@NODE CONVERT_PROCESS "Ablauf des Konvertierens"
+
+ Die eigentliche Konvertierung
+ =============================
+
+ Die Konvertierung starten Sie durch Anklicken des großen Gadgets 'Konvertieren'
+ links unten.
+
+ Es erscheint ein  neues  Fenster.  Im	unteren  Teil  wird  Ihnen  im	Klartext
+ mitgeteilt,  was  GfxCon  im  Augenblick  macht  (also  z.B.  Bild  laden, Bild
+ drehen...) im oberen Teil des Fensters sehen Sie  an  einem  Balken,  wie  weit
+ dieser Vorgang fortgeschritten ist.
+
+ Es kann sein, daß das Programm Sie zu weiteren Eingaben auffordert
+ (bei @{"JPEG-Ausgabe" link JPEG} muß die Qualität angegeben werden und bei
+ @{"Postscript-Ausgabe" link POST} müssen die @{"Bildabmessungen" link POST_JUSTIFY} eingegeben werden).
+
+@ENDNODE
+
+@REMARK =========================================================================
+
+@NODE INPUT_INFORMATION "Informationen über die Eingabedatei"
+
+ Informationen über die Eingabedatei
+ ===================================
+
+ Mit dem großen Gadget "Informationen" können Sie Details  über das  EingabeBild
+ abrufen.  Dazu  öffnet  sich  ein  Fenster,  in  dem alle Details über das Bild
+ scrollen.  Welche  Informationen  angezeigt  werden,	ist   vom   Format   des
+ Eingabe-Bildes  abhängig. Die Informationen können sehr umfangreich (TIFF) oder
+ auch sehr knapp (IMG) ausfallen.
+@ENDNODE
+@NODE PROBLEMS "Probleme"
+@NEXT PROBLEMS
+
+ Probleme ?
+ ==========
+
+ In einem Verzeichnis meiner Festplatte sind Files  mit  dem  Namen  'GFXCON#?'.
+ Welchen Zweck haben diese?
+
+   Diese Dateien werden bei der Ausnutzung @{"virtuellen Speichers" link VIRTUAL_MEMORY} erzeugt.
+   Normalerweise werden diese Dateien automatisch nach Gebrauch wieder entfernt.
+   Sollten  Sie  jedoch  das  Programm einmal während einer Berechnung mit einen
+   Reset abgebrochen haben, so können unter Umständen diese Dateien  nicht  mehr
+   entfernt werden.
+
+   Entfernen Sie diese dann bitte manuell oder starten sie GfxCon, um diese
+   Dateien automatisch zu entfernen.
+
+-----------------------------------------------------------------------------
+
+ Nach dem Programmstart bekomme ich nur die Fehlermeldung "Bildaufbau paßt nicht
+ auf den Screen".
+
+   Das Programm ist @{"fontsensitiv" link FONTS}. Sollten Sie in den @{"Tooltypes" link TOOLTYPES} sehr
+   große Zeichensätze eingetragen haben, so kann es  eventuell	sein,  daß  Ihre
+   Bildschirmauflösung nicht zur Darstellung des Bildes ausreicht.
+
+   Wählen Sie einen kleineren Zeichensatz in den ToolTypes.
+
+@ENDNODE
+@NODE TOOLTYPES "Einstellung der Tooltypes"
+@PREV TOOLTYPES
+@NEXT TOOLTYPES
+
+ Folgende Tooltypes werden unterstützt:
+
+ LANGUAGE     - Hiermit stellen Sie  die  Sprache  ein,  in  der  alle
+		Ausgaben des Programms erscheinen. Mögliche Werte sind
+		hier: 'deutsch', 'englisch' bzw. 'german', 'english'.
+
+
+ TEMPDIR      - Da GfxCon  zur	Konvertierung von  großen Bildern sehr
+		viel  @{"Speicher" link MEMORYUSAGE}  braucht, lagert  GfxCon bei  zu wenig
+		RAM-Speicher Teile des Bildes auf Festplatte o.ä.  aus,
+		um auch die Bearbeitung dieser Bilder zu ermöglichen.
+		(s. {"Virtueller Speicher" LINK VIRTUAL_MEMORY}).
+
+		Mit  diesem  ToolType  geben  Sie   an,   in   welches
+		Verzeichnis  Dateien  für  diesen Zweck erzeugt werden
+		dürfen.
+
+		Wichtig: Dieser String wird als Prefix für  den  Namen
+			 benutzt.  Geben  Sie  also z.B nicht 'sys:t',
+			 sondern 'sys:t/' an.
+
+		Tip: Dieses temporäre Verzeichnis  sollten Sie	in der
+		     s:user-startup automatisch löschen,  da sich dort
+		     im Fehlerfalle Dateien ansammeln könnten.
+
+
+ STDLOADPATH  - Wahrscheinlich haben auch Sie  Ihre  Bilder  in  einem
+		bestimmten   Verzeichnis  gespeichert.	Um  Ihnen  das
+		Eintippen dieses Pfades abzunehmen,  können  Sie  hier
+		den  Standartpfad  eingeben.  Wenn Sie nun im Programm
+		einen Filerequester aufrufen, befindet sich dort schon
+		Ihr Standartpfad.
+
+
+ STDSAVEPATH  - Das zu STDLOADPATH entsprechende für den Zielpfad.
+
+
+ GADGETFONT   - Hiermit stellen  Sie  den  Zeichensatz	ein,  der  zur
+		Darstellung   der  meisten  Gadgets  und  der  übrigen
+		Ausgaben  verwendet  werden  soll.  Das   Format   ist
+		hierbei:  '<Name>  <Größe>'. Also z.B.: 'topaz 8' oder
+		'helvetica 18'.
+
+
+ TITLEFONT    - Zeichensatz   für   hervorgehobene   Texte   wie   die
+		Überschriften	oder   große   Gadgets.   Das	Format
+		entspricht dem von 'GADGETFONT'.
+
+ MINMEM       - Wieviel  Speicher (in Bytes)  GfxCon nicht benutzt, um
+		Platz für andere Programme zulassen.
+
+ MINMEMBLOCK  - GfxCon benutzt nur soviel Speicher,  daß ein Block mit
+		mindestens "MINMEMBLOCK" Bytes frei bleibt.
+
+@ENDNODE
+
+@NODE FORMAT_RECOGNITION "Automatische Formaterkennung"
+@PREV FORMAT_RECOGNITION
+@NEXT FORMAT_RECOGNITION
+
+ GfxCon erkennt das Eingabeformat  automatisch.  Es  analysiert  dafür	die
+ Datei und bezieht sich @{B}nicht@{UB} auf die Endung der Datei.
+
+ Die Formaterkennung wird aufgerufen, sobald Sie das  oberste  StringGadget
+ im 'Laden'-Bereich verlassen (entweder durch TAB oder RETURN).
+
+ Dieses  Verfahren  arbeitet  sehr  zuverlässig,  so daß in der Praxis wohl
+ keine falschen Formate angenommen werden.
+
+ Es kann aber (auch  theoretisch)  ein  Eingabeformat  nie  100%ig  erkannt
+ werden.  Dafür  können  bestimmte Formate sicher ausgeschlossen werden und
+ andere als sehr unwahrscheinlich angenommen werden.
+
+ Sollte ein Eingabeformat allerdings doch einmal falsch erkannt werden,  so
+ können  Sie  mit  dem	Popup-Gadget  im  Bereich 'Laden' das Eingabeformat
+ manuell korrigieren.
+@ENDNODE
+
+@NODE MEMORYUSAGE "Speicherverbrauch"
+@PREV MEMORYUSAGE
+@NEXT MEMORYUSAGE
+
+ GfxCon benötigt  @{B}sehr@{UB}  viel  Speicher,  da  alle  Bilder intern  mit
+ 24 Bit gespeichert und bearbeitet werden. Zusätzlich benötigt das Programm
+ auch noch ein weiteres Byte pro Pixel zur Speicherung spezieller Daten.
+
+ Für den Speicherverbrauch gilt somit folgende Faustformel:
+
+ +---------------------------------------------------------------+
+ |								 |
+ | Speicherverbrauch = Höhe in Pixel * Breite in Pixel * 4 Bytes |
+ |								 |
+ +---------------------------------------------------------------+
+
+ Also für ein  320x 256 Bild  320 kByte
+	       640x 512      1.25 MB
+	       800x 600  ca. 1.80 MB
+	      1024x 768 	3 MB
+	      1280x1024 	5 MB
+
+
+ Ausnahme:
+ ---------
+ Bei bestimmten Effekten (Größe verändern, Bild drehen) muß das Programm  2
+ Bilder gleichzeitig im Speicher halten.
+
+ Der  Speicherverbrauch  addiert  sich	dann aber nicht, da GfxCon erkennt,
+ wenn es bestimmte Teile des Eingabebildes  nicht  mehr  benötigt  und	den
+ Speicher dann sofort freigibt.
+
+
+ Abhilfe:
+ --------
+ Um diese Datenmengen auch mit wenig RAM-Speicher  verarbeiten	zu  können,
+ werden  bei  Speichermangel  gerade  nicht  benötigte Teile des Bildes auf
+ Festplatte ausgelagert (@{"Virtueller Speicher" link VIRTUAL_MEMORY}).
+
+@ENDNODE
+@NODE VIRTUAL_MEMORY "Virtueller Speicher"
+@PREV VIRTUAL_MEMORY
+@NEXT VIRTUAL_MEMORY
+
+ Sollte der RAM-Speicher für ein Bild nicht ausreichen, so speichert GfxCon
+ Teile	des  Bildes  auf  Festplatte  (o.ä.),  um  damit  Platz für weitere
+ Berechnungen im RAM schaffen zu können.
+
+ Sollte ein Bild z.B.  5  MB  Speicher	verbrauchen,  aber  nur  3  MB	RAM
+ vorhanden  sein,  so  werden  mindestens  2  MB  Speicher  auf  Festplatte
+ ausgelagert (s. @{"Speicherverbrauch" link MEMORYUSAGE}).
+
+ Diese Files werden natürlich sofort nach dem Gebrauch wieder gelöscht,  um
+ die Festplatte nicht unnötig zu füllen.
+
+
+ TIP
+ ---
+ Sollten Sie das Programm während  der	Konvertiertung	durch  einen  Reset
+ abbrechen, kann es diese Files nicht  mehr löschen. Ab  Version 1.3 löscht
+ GfxCon solche überflüssigen Dateien während dem Programmstart.
+
+ Löschen Sie auf keinen Fall (!!!) solche Dateien während das Programm  ein
+ Bild bearbeitet.
+
+@ENDNODE
+@NODE SUPPORTED_FORMATS "Unterstützte Bildformate"
+
+
+		      Unterstützte Bildformate
+		      ========================
+
+
+    Eingabeformate			   Ausgabeformate
+    --------------			   --------------
+
+    @{" ILBM              " link ILBM}                    @{" ILBM       " link ILBM}
+    @{" LBM               " link ILBM}                    @{" PCX        " link PCX }
+    @{" RGB8 / RGBN       " link RGB8}                    @{" JPEG       " link JPEG}
+    @{" PCX               " link PCX }                    @{" RGB-Raw    " link RGB }
+    @{" IMG               " link IMG }                    @{" Postscript " link POST}
+    @{" BMP / RLE4 / RLE8 " link BMP }                    @{" GIF        " link GIF }
+    @{" GIF               " link GIF }
+    @{" TIFF              " link TIFF}
+    @{" JPEG              " link JPEG}
+    @{" Targa             " link TGA }
+    @{" RGB-Raw           " link RGB }
+
+@ENDNODE
+
+@NODE ILBM "IFF - ILBM Format"
+@PREV SUPPORTED_FORMATS
+
+ IFF - ILBM Format
+ -----------------
+
+
+ Lesen
+ -----
+
+ - Gelesen werden Bilder mit beliebiger Farbanzahl sowie 24 bit, HAM6/8 und
+   ExtraHalfBrite Bilder.
+
+ - Ebenfalls wird die PC-Variante des ILBM-Formats mit 16 oder 256 Farben
+   gelesen.
+
+ - Die Bilder können komprimiert oder unkomprimiert vorliegen.
+
+
+
+
+ Ausgabe
+ -------
+
+ - Es werden ILBM-Bilder mit beliebiger Farbzahl (auch über 256)
+   unterstützt.
+
+ - Ebenso können Bilder mit 24 Bit und HAM6/8 Bilder erzeugt werden.
+
+ - Die Bilder werden grundsätzlich komprimiert gespeichert.
+
+ -  Nicht unterstützt werden bisher: ExtraHalfbrite-Bilder
+
+@ENDNODE
+@NODE PCX "PCX - Format"
+
+ PCX - Format
+ ------------
+
+
+ Lesen
+ -----
+
+ - Es können alle PCX-Bilder gelesen werden.
+
+ - Komprimierte und unkomprimierte können gelesen werden.
+
+
+
+ Ausgabe
+ -------
+
+ - Es können alle Varianten geschrieben werden. D.h. Bilder mit 2,16 oder
+   256 Farben können erzeugt werden.
+
+ - Bilder werden grundsätzlich komprimiert gespeichert.
+
+ - Bilder werden als PCX-Version 3.0 gespeichert.
+@ENDNODE
+@NODE JPEG "JPEG - Format"
+
+ JPEG Format
+ -----------
+
+
+ Lesen
+ -----
+
+ - Es können farbigen JPEG/JFIF Bilder gelesen werden.
+   Reine Graustufenbilder können nicht gelesen werden.
+
+
+ Ausgabe
+ -------
+
+ - Die Qualität des Ausgabebildes kann eingestellt werden.
+@ENDNODE
+@NODE POST "Postscript"
+
+ Postscript - Format
+ -------------------
+
+ Lesen
+ -----
+
+ - Das Postscript-Format kann derzeit noch nicht gelesen werden.
+
+
+ Ausgabe
+ -------
+
+ - Die Postscriptausgabe von GfxCon ist dazu gedacht, einen Postscript-
+   Drucker direkt anzusteuern. Sie ist nicht als Austauschformat (EPS)
+   gedacht.
+
+ - keine EPS Ausgabe.
+
+ - Die Abmessungen des Ausgabebildes können in 'cm' angegeben werden, um so
+   eine genaue @{"Positionierung" link POST_JUSTIFY} auf dem Drucker zu ermöglichen.
+
+ - Ausgabe nur in Schwarz-Weiß (Farbbilder werden automatisch in Schwarz-
+   Weiß umgewandelt)
+@ENDNODE
+@NODE RGB "RGB - Auszüge"
+
+ RGB - Auszüge	  ( 3 Dateien mit Rot,Grün und Blau - Auszügen)
+ -------------
+
+ Lesen
+ -----
+
+ - Da die Abmessungen des Eingabebildes nicht aus den Eingabedaten
+   bestimmt werden können, rät das Programm die Abmessungen des
+   Eingabebildes. Die Abmessungen können aber natürlich manuell
+   korrigiert werden.
+
+
+ Ausgabe
+ -------
+
+ - ja
+@ENDNODE
+@NODE RGB8 "RGB8 / RGBN - Format"
+
+ IFF - RGB8 / RGBN - Format  (Imagine)
+ -------------------------------------
+
+ Lesen
+ -----
+
+ - Es können alle RGBN (4096 Farben) und RGB8 (Echtfarben, 24 bit) Bilder
+   gelesen werden.
+
+
+ Ausgabe
+ -------
+
+   Ausgabe wird nicht unterstützt.
+@ENDNODE
+@NODE IMG "IMG - Format"
+
+ IMG  (GEM Image File Format)
+ ----------------------------
+
+ Lesen
+ -----
+
+ - Es können alle IMG-Dateien gelesen werden.
+
+ - IMG Dateien enthalten @{B}keine@{UB} Farbtabelle. Deswegen werden die
+   PC-Standartfarben angenommen.
+
+
+ Ausgabe
+ -------
+
+   Ausgabe wird nicht unterstützt.
+@ENDNODE
+@NODE BMP "BMP/RLE4/RLE8 - Formate"
+
+ BMP / RLE4 / RLE8    (MS-Windows)
+ ---------------------------------
+
+ Lesen
+ -----
+
+ - Alle Formate
+
+ - Kompression wird vollständig unterstützt.
+
+
+ Ausgabe
+ -------
+
+   Ausgabe wird nicht unterstützt.
+@ENDNODE
+@NODE GIF "GIF - Format"
+
+ GIF - Format
+ ------------
+
+ Lesen
+ -----
+
+ - Es können alle GIF-Bilder gelesen werden (auch Bilder mit weniger als
+   256 Farben)
+
+ - Sowohl Raster- als auch Interlaced-Bilder werden gelesen.
+
+ - Es wird immer nur das erste Bild einer Datei gelesen.
+
+
+ Ausgabe
+ -------
+
+ - Es wird immer im GIF87a Format gespeichert.
+@ENDNODE
+@NODE TIFF "TIFF - Format"
+@NEXT TIFF
+
+ TIFF - Format
+ -------------
+
+ Lesen
+ -----
+
+ - unkomprimiert:	       Schwarz-Weiß (2 farbig)
+				16 Farben   (mit und ohne Bitplanes)
+			       256 Farben   (mit und ohne Bitplanes)
+			       RGB-Bilder   (ohne Bitplanes)
+
+ - CCITT3 (FAX) komprimiert:   Schwarz-Weiß
+
+ - RunLength		       Schwarz-Weiß
+			       256 Farben
+
+ - LZW			       Schwarz-Weiß
+			       256 Farben
+			       RGB-Bilder
+
+ - JPEG wird nicht unterstützt.
+
+
+ Schreiben
+ ---------
+
+   Ausgabe noch nicht unterstützt.
+@ENDNODE
+@NODE TGA "Targa - Format"
+@NEXT TGA
+
+ Targa (TGA) - Format
+ --------------------
+
+ Lesen
+ -----
+
+ - nur Echtfarbenbilder
+ - 15,16,24 oder 32 Bit
+ - unkomprimiert und RLE
+
+
+ Schreiben
+ ---------
+
+   Ausgabe nicht unterstützt.
+@ENDNODE
+@NODE POST_JUSTIFY "Bildpositionierung bei Postscript-Ausgabe"
+@PREV POST_JUSTIFY
+@NEXT POST_JUSTIFY
+
+ Positionierung der Postscript-Ausgabe
+ =====================================
+
+ Die Positionierung des Bildes geschieht durch Angabe der linken, oberen
+ Ecke des Bildes (gemessen von der linken unteren Ecke des Papiers im
+ Hochkantformat) sowie der Höhe und Breite des Bildes.
+
+ Die automatisch in den Gadgets eingestellten Werte sind so bemessen, daß
+ das Bild eine Breite von @{B}18cm@{UB} hat und eine Höhe entsprechend dem
+ Pixelverhältnis.
+
+ @{U}Wichtig@{UU}: Sollte ein Bild um einiges höher als breit sein, kann es
+	  sein, daß es nicht mehr ganz auf die Seite paßt, Sie müssen die
+	  Breite dann verringern, um das ganze Bild auf die Seite zu
+	  bekommen.
+
+@ENDNODE
+@NODE PRG_INFOS "Über das Programm"
+@PREV PRG_INFOS
+@NEXT PRG_INFOS
+
+ WICHTIG: Wie so oft, ist auch die Version 1.8b mal wieder die
+	  letzte. Da bin ich mir mal wieder ganz sicher :-)
+
+ Der Nachfolger ist aber schon in Arbeit (schon seit langem).
+ Wer mutig ist und ihn schon einmal testen will, findet
+ Preview-Versionen davon auf meiner WWW-Seite.
+
+
+ Programmautor
+ =============
+
+ Dirk Farin
+ Kapellenweg 15
+ 72070 Tübingen
+ Germany
+
+ EMail: farindk@trick.informatik.uni-stuttgart.de
+ WWW:	http://tick.informatik.uni-stuttgart.de/~farindk
+
+ @{"Copyright      " link COPYRIGHT}
+ @{"(Registrierung)" link REGISTER}
+
+ Verbesserungsvorschläge, sowie Bug-Reports werden von mir
+ gerne (am liebsten über EMail) entgegengenommen und mit
+ Sicherheit auch beantwortet (wenn es manchmal auch etwas
+ dauert).
+
+ Sollten Sie Ihr Lieblingsformat vermissen (und vielleicht
+ sogar genaue Unterlagen über es haben), so werde ich mich
+ bemühen, auch dieses Format in zukünftigen Versionen zu
+ implementieren.
+
+
+ Das Programm wurde auf einem Amiga3000T/25Mhz mit 5MB,
+ Kick2.04 und Grafikkarte entwickelt.
+ Compiliert wurde es mit SAS/C V6.55.
+
+ Es wurde auf folgenden Systemen getestet und lief fehlerlos:
+
+  Amiga 3000T / OS2.04
+  Amiga 3000  / OS2.04
+  Amiga 2000  / OS2.04
+  Amiga  500  / OS2.04
+  Amiga 4000  / OS3.0
+  Amiga 1200  / OS3.0
+  ...  :-))
+
+
+ Ein herzlicher Dank geht an:
+
+   Fred Fish		     für die vielen Fish-Disks / -CDs.
+   Matthew Dillon	     für seinen DME-Editor.
+   Bob Richardson	     der mir den finanziellen Anreiz für die
+			     Entwicklung von Version 1.8 verschaffte.
+   Die Betreiber von Aminet
+   Alle Benutzer von GfxCon, die mir eine EMail, eine Postkarte oder auch
+     einen Brief und/oder Bug-Reports geschickt haben !!!
+
+@ENDNODE
+@NODE REGISTER "Registrierung"
+@PREV REGISTER
+@NEXT REGISTER
+
+ (Registrierung)
+ ---------------
+
+ Dieses Programm ist Cardware / EMailware.
+
+ Da das Programm schon sehr alt und wohl auch nicht mehr auf
+ dem neuesten Stand, halte ich es für übertrieben, es als
+ Shareware zu vermarkten.
+
+ Wenn Sie das Programm gelegentliche benutzen, schicken Sie
+ mir deshalb bitte lediglich eine Postkarte oder schreiben
+ einen Brief über EMail, wie Ihnen das Programm gefällt und
+ was noch verbessert werden könnte.
+
+ Ich beantworte natürlich auch gerne Fragen in Bezug auf das
+ Programm.
+
+ @{"Meine Adresse" link PRG_INFOS}
+@ENDNODE
+@NODE COPYRIGHT "Copyright"
+@PREV COPYRIGHT
+@NEXT COPYRIGHT
+
+ Copyright:
+ ----------
+
+ GfxCon ist @{"Cardware / EMailware." link REGISTER}
+
+ Es darf auf Public-Domain-Disketten, dem Aminet und
+ sonstigen Wegen zum Selbstkostenpreis verbreitet werden.
+ Auf keinen Fall darf GfxCon oder Teile davon ohne meine
+ Genehmigung kommerziell vertrieben werden.
+
+
+
+ The Graphics Interchange Format(c) is the Copyright property of
+ CompuServe Incorporated. GIF(sm) is a Service Mark property of
+ CompuServe Incorporated.
+@ENDNODE
+

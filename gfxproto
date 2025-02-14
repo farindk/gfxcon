@@ -1,0 +1,2 @@
+lc -cfirsu -rr -ms3 -v -Hram:incs.pre -pre -ogfxbuffer.h -DCREATING_GFXPROTO gfxbuffer.c
+

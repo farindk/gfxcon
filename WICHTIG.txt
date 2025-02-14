@@ -1,0 +1,7 @@
+
+Die Files in /mylib muessen OHNE Optimierung kompiliert werden,
+sonst klappt da irgendwas nicht!
+
+Ebenso ftiff.c !  (Seit Version 1.8 nicht mehr???)
+
+

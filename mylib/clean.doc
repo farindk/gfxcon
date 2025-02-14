@@ -1,0 +1,141 @@
+
+struct CleanupList *NewCleanup(struct CleanupList *parent);
+void CloseCleanup(void);
+void SetCleanup(struct CleanupList *cl);
+void DoCleanup (struct CleanupList *cl);
+void DoCleanupFree(struct CleanupList *cl);
+
+void *cu_calloc(int size1,int n);
+void  cu_free  (void *memptr);
+FILE *cu_fopen (char *name,char *mode);
+int   cu_fclose(FILE *file);
+struct MsgPort *cu_CreateMsgPort(void);
+struct Library *cu_OpenLibrary(char *,unsigned long ver);
+struct TextFont *cu_OpenDiskFont(struct TextAttr *);
+
+BOOL cu_AddHead(struct List *l,struct Node *n);
+BOOL cu_AddTail(struct List *l,struct Node *n);
+
+BOOL cuinsert_OpenWindow(struct Window *win);
+BOOL cuinsert_GadgetList(struct Gadget *glist);
+BOOL cuinsert_AddAppWindow(struct AppWindow *appwin,struct MsgPort *port);
+BOOL cuinsert_VisualInfo(APTR vi);
+BOOL cuinsert_CallFunction(void (*func)(void *),void *parameter);
+
+
+                    Example usage of the new functions
+                   ************************************
+
+The main part of your program could look like this:
+---------------------------------------------------
+
+struct CleanupList *global_cleanup;   /* make this a global variable */
+
+main()
+{
+  if (global_cleanup = NewCleanup(NULL))
+  {
+    /* open libraries ... */
+
+    /* the program ... */
+
+    DoCleanupFree(global_cleanup);
+  }
+}
+
+
+Subroutines should look like this:
+----------------------------------
+
+static struct CleanupNode *xxx_cleanup;
+
+BOOL open_xxx(void)
+{
+  if (!(xxx_cleanup = NewCleanup(global_cleanup) ))
+    return FALSE;
+
+  /* ... */
+
+  win=OpenWindow(...);
+  if (!cuinsert_OpenWindow(win))   /* error checking is done here ! */
+    goto errexit;                  /* error is already set with SetError() */
+
+  if (!(mp=cu_CreateMsgPort()))
+    goto errexit;
+
+  /* ... */
+
+  CloseCleanup();
+
+  return TRUE;
+
+errexit:
+  DoCleanupFree(xxx_cleanup);
+  return FALSE;
+}
+
+void handle_xxx(void)
+{
+  if (!open_xxx()) { ShowError(); return; }
+
+  /* ... your routines ... */
+
+  DoCleanupFree(xxx_cleanup);
+}
+
+
+long-life structures:
+---------------------
+
+static struct CleanupNode *xxx_cleanup;
+
+BOOL create_xxx(void)  /* just like the open_xxx() above */
+{
+  if (!(xxx_cleanup = NewCleanup(global_cleanup) ))
+    return FALSE;
+
+  if (!(ptr=cu_calloc(a,b)))
+    goto errexit;
+
+  CloseCleanup();
+
+  return TRUE;
+
+errexit:
+  DoCleanupFree(xxx_cleanup);
+  return FALSE;
+}
+
+void remove_xxx(void)
+{
+  DoCleanupFree(xxx_cleanup);
+}
+
+BOOL change_xxx(void)
+{
+  DoCleanup(xxx_cleanup);
+  SetCleanup(xxx_cleanup);
+
+  if (!(ptr=cu_calloc(a,b)))
+    goto errexit;
+
+  CloseCleanup();
+  return TRUE;
+
+errexit:
+  DoCleanupFree(xxx_cleanup);
+  return FALSE;
+}
+
+void do_xxx(void)
+{
+  if (create_xxx()) { ShowError(); return; }
+
+  for (...;...;...)
+  {
+    if (change_xxx()) { ShowError(); return; }
+  }
+
+  remove_xxx();
+}
+
