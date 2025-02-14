@@ -8,6 +8,7 @@ At that time, I used the SAS 6.50 C compiler. I have not tried to compile it sin
 
 Note that there is also a `v1.9` branch. It seems that I started adding PNG support and replaced the JPEG codec.
 I do not remember whether this ever worked or was left unfinished.
+
 ---
 
 ````
