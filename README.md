@@ -6,6 +6,8 @@ a few minor fixes and adding the strange CVP image format, which I completely fo
 
 At that time, I used the SAS 6.50 C compiler. I have not tried to compile it since then.
 
+Note that there is also a `v1.9` branch. It seems that I started adding PNG support and replaced the JPEG codec.
+I do not remember whether this ever worked or was left unfinished.
 ---
 
 ````
