@@ -15,13 +15,8 @@
  ********************************************************************************/
 
 #include "glib:mylib.h"
-
-#include "myerrs.h"
-#include "mytxts.h"
-
-#ifndef  REGISTERED
-ULONG  DoShowNerver(void);  /* fuer die unregisterten Versionen */
-#endif
+#include "glib:myerrs.h"
+#include "glib:mytxts.h"
 
 typedef UBYTE BOOL8;
 typedef struct FormatObject *form;
@@ -30,8 +25,8 @@ typedef struct FormatObject *form;
 #define ReadByte()  getc(file_load)
 #define SaveByte(c) putc(c,file_save)
 
-extern FILE *file_load; /*--> do NOT use this <--*/
-extern FILE *file_save; /*--> do NOT use this <--*/
+extern FILE *file_load; /*--> do NOT directly use this <--*/
+extern FILE *file_save; /*--> do NOT directly use this <--*/
 
 #define MAX_FORMATS 20
 
@@ -94,6 +89,7 @@ enum Method { Method_CheckFormat,
 #define FORM_PS    19
 #define FORM_TGA   20
 #define FORM_CVP   21
+#define FORM_PNG   22
 
 
 
@@ -109,61 +105,6 @@ extern char *GetTempPostfix(void);
 
 #define TMP_FILENAME_LENGTH 200
 
-/* output - definitions */
-
-extern ULONG Output_nColors;
-extern  LONG Output_Brightness;
-extern  LONG Output_Contrast;
-
-extern ULONG Output_Interpolated;
-extern ULONG Output_Width;         /* V1.8: now (almost) OBSOLET */
-extern ULONG Output_Height;
-
-/* command parameters */
-
-extern ULONG  Output_DoResize;     /* rev. V1.8 */
-extern BOOL   Output_ResizeH;
-extern BOOL   Output_ResizeV;
-extern double Output_ResizeFactor;
-
-extern ULONG Output_DoSize;   /* semantics changed V1.8: Do a SIZE-operation */
-extern ULONG Output_NewWidth;
-extern ULONG Output_NewHeight;
-
-extern ULONG Output_DoBoxfit; /* new V1.8 */
-extern BOOL  Output_Boxfit_MayEnlarge;
-extern ULONG Output_BoxfitWidth;
-extern ULONG Output_BoxfitHeight;
-
-
-extern ULONG Output_Mode;
-extern ULONG Output_Dither;
-extern ULONG Output_FlipFlags;
-extern ULONG Output_RotateFlags;
-extern ULONG Output_ColorEffects;
-
-
-/* new: V1.8 */
-
-extern ULONG Output_Crop_x1;
-extern ULONG Output_Crop_y1;
-extern ULONG Output_Crop_x2;
-extern ULONG Output_Crop_y2;
-extern BOOL  Output_DoCrop;
-
-extern BOOL  Output_DoCenterBox;
-extern ULONG Output_CenterBox_Width;
-extern ULONG Output_CenterBox_Height;
-extern UBYTE Output_CenterBox_R;
-extern UBYTE Output_CenterBox_G;
-extern UBYTE Output_CenterBox_B;
-
-extern UBYTE EmptyCLUTEntry_R;
-extern UBYTE EmptyCLUTEntry_G;
-extern UBYTE EmptyCLUTEntry_B;
-
-extern ULONG Output_ColorOffset;
-extern  LONG Output_SortCLUT;
 
 
 ULONG GetOutputFlags(void);
@@ -251,7 +192,7 @@ union Pixel   /* each pixel is defined with its RGB-value or its CLUT-index */
 #define GFXMOD_FLOYD     (1<< 4)  /* do dither                 */
 #define GFXMOD_FASTFLOYD (1<<17)  /* do dither (faster but not that accurate) */
 #define GFXMOD_HALFTONE  (1<< 5)  /*--- not yet ---------------*/
-#define GFXMOD_GRAYSCALE (1<<18)  /* gleichmï¿½ï¿½ige Graustufen   */
+#define GFXMOD_GRAYSCALE (1<<18)  /* gleichmäßige Graustufen   */
 
 #define GFXMOD_RESIZE   (1<< 6)
 #define GFXMOD_FLIPX    (1<< 7)

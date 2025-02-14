@@ -24,8 +24,6 @@
 
 #define STACKSIZE 20000
 
-BOOL cli;
-
 
 // void __regargs __chkabort(void) { }   // REINSERT AFTER DEBUGGING !!!!!
 
@@ -33,8 +31,8 @@ extern struct ExecBase *SysBase;
 
 int startup(int argc,char **argv)
 {
-  if (argc==0 || argc==1) { cli=FALSE; return wbstart (argc,argv); }
-  else			  { cli=TRUE;  return clistart(argc,argv); }
+  if (argc==0 || argc==1) { CLImode=FALSE; return wbstart (argc,argv); }
+  else                    { CLImode=TRUE;  return clistart(argc,argv); }
 }
 
 
@@ -59,7 +57,7 @@ char *GetTempPostfix(void) { return TmpPostfix; }
 
 static struct {
   enum Language  LanguageID;
-  char		*Name;
+  char          *Name;
 } Languages[] =
 {
   LANGUAGE_ENGLISH , "englisch",
@@ -92,9 +90,9 @@ static void SetFontToToolType(struct TextAttr *ta,char *fontname,char *toolarg)
   for (i=0;toolarg[i] != '\0' && i<FONTNAME_LENGTH;i++)
   {
     if (toolarg[i] == ' ') { fontname[i]=0;
-			     sizepos=&toolarg[i+1];
-			     break;
-			   }
+                             sizepos=&toolarg[i+1];
+                             break;
+                           }
 
     fontname[i]=toolarg[i];
   }
@@ -122,8 +120,8 @@ extern int AbsMinMemBlock;
 void ReadToolTypes(char *name)
 {
   struct DiskObject  *diskobj;
-  char		     *param;
-  char		    **tooltypes;
+  char               *param;
+  char              **tooltypes;
 
   diskobj = GetDiskObject(name);
   if (diskobj)
@@ -225,9 +223,9 @@ void __autoopenfail(char* lib)
 int main(int argc,char **argv)
 {
   int returncode=10;
-  char		   *ProgName;  /* the name of our program */
+  char             *ProgName;  /* the name of our program */
   struct WBStartup *wbstup;
-  struct WBArg	   *wbarg;
+  struct WBArg     *wbarg;
 
   if (AskStackSize() < STACKSIZE)
   { printf("Sorry, need %d bytes (or a bit more) stack!\n",STACKSIZE); return 100; }
@@ -285,18 +283,18 @@ int main(int argc,char **argv)
 
       if (argc<=1)
       {
-	if (!(InitConstructData(NULL,GlobalCleanup)))
-	{
-	  ShowError();
-	}
-	else
-	{
-	  SetNormFont(&gadfont);
-	  returncode=startup(argc,argv);
-	}
+        if (!(InitConstructData(NULL,GlobalCleanup)))
+        {
+          ShowError();
+        }
+        else
+        {
+          SetNormFont(&gadfont);
+          returncode=startup(argc,argv);
+        }
       }
       else
-	returncode=startup(argc,argv);
+        returncode=startup(argc,argv);
     }
 
     if (msgport) DeletePort(msgport);

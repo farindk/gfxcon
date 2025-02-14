@@ -15,6 +15,7 @@
  ********************************************************************************/
 
 #include "global.h"
+#include "options.h"
 
 extern char Loadname  [];
 extern char Loadname_g[];
@@ -31,47 +32,10 @@ extern void CheckLoadFormats(void);
 
 extern struct FormatObject FormatObjs[];
 
-short JPEGQuality;
 ULONG inputwidth;
 BOOL  noprogress;
 
 short NewBackgroundColor;
-
-/* new: V1.8 */
-
-ULONG Output_Crop_x1;
-ULONG Output_Crop_y1;
-ULONG Output_Crop_x2;
-ULONG Output_Crop_y2;
-BOOL  Output_DoCrop;
-
-BOOL  Output_DoCenterBox;
-ULONG Output_CenterBox_Width;
-ULONG Output_CenterBox_Height;
-UBYTE Output_CenterBox_R;
-UBYTE Output_CenterBox_G;
-UBYTE Output_CenterBox_B;
-
-UBYTE EmptyCLUTEntry_R;
-UBYTE EmptyCLUTEntry_G;
-UBYTE EmptyCLUTEntry_B;
-
-ULONG Output_ColorOffset;
- LONG Output_SortCLUT;
-
-ULONG  Output_DoResize;     /* rev. V1.8 */
-BOOL   Output_ResizeH;
-BOOL   Output_ResizeV;
-double Output_ResizeFactor;
-
-ULONG Output_DoSize;   /* semantics changed V1.8: Do a SIZE-operation */
-ULONG Output_NewWidth;
-ULONG Output_NewHeight;
-
-ULONG Output_DoBoxfit; /* new V1.8 */
-BOOL  Output_Boxfit_MayEnlarge;
-ULONG Output_BoxfitWidth;
-ULONG Output_BoxfitHeight;
 
 
 
@@ -101,6 +65,7 @@ static void usage(const char* prgname)
          "                               border with the color (r,g,b)\n"
          "\n"
          "QUALITY q     set JPEG-quality\n"
+         "PROGRESSIVE   save JPEG in progressive mode\n"
          "CLUT          select IFF-CLUT  mode\\\n"
          "HAM                  IFF-HAM   mode \\_ use only with 'FORMAT ILBM'\n"
          "HAM8                 IFF-HAM8  mode /\n"
@@ -145,7 +110,7 @@ int clistart(int argc,char **argv)
   struct FormatObject* fo;
 
   printf("----------------------------------------------------------------------------\n"
-         " GfxCon V1.8f      ï¿½ Dirk Farin / farindk@trick.informatik.uni-stuttgart.de \n"
+         " GfxCon V1.9                        © Dirk Farin / farin@ti.uni-mannheim.de\n"
          "----------------------------------------------------------------------------\n");
 
   if (argc>=2)
@@ -166,7 +131,6 @@ int clistart(int argc,char **argv)
 //  Load_is_RGB = FALSE;
 //  Save_is_RGB = FALSE;
 
-  JPEGQuality = 75;
   NewBackgroundColor = -1;
 
   strcpy(Loadname,argv[argcnt]);
@@ -217,7 +181,7 @@ int clistart(int argc,char **argv)
 formatfound:
       ;
 
-      // --- neue Endung an Savenamen dranhï¿½ngen, wenn er nicht explizit geï¿½ndert wurde
+      // --- neue Endung an Savenamen dranhängen, wenn er nicht explizit geändert wurde
 
       if (!explicit_savename)
       {
@@ -450,10 +414,16 @@ suffixexchanged:
       argcnt++;
       if (argcnt>=argc) { printf("QUALITY-parameter missing !\n"); return 100; }
 
-      JPEGQuality = atoi(argv[argcnt]);
-      if (JPEGQuality<25)  JPEGQuality=25;
-      if (JPEGQuality>100) JPEGQuality=100;
+      Output_JPEG_Quality = atoi(argv[argcnt]);
+      if (Output_JPEG_Quality<25)  Output_JPEG_Quality=25;
+      if (Output_JPEG_Quality>100) Output_JPEG_Quality=100;
 
+      argcnt++;
+    }
+    else
+    if (stricmp("PROGRESSIVE",argv[argcnt])==0)
+    {
+      Output_JPEG_Progressive = TRUE;
       argcnt++;
     }
     else

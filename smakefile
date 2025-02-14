@@ -1,42 +1,56 @@
 
-# note: as SAS 6.50 seems to produce wrong code on the files in "glib:" when
-#       opimizing, you unfortunately have to turn optimization off.
-#       That means you may only replace (FLAGS) with (OPTFLAGS) in the
-#       action-line of ".c.o:" if you don't comile files from the "glib:"
-#       directory.
+JPEGDIR = jpeg-6b
+GLIBDIR = glib
+PNGDIR  = libpng-1.0.3
+ZLIBDIR = zlib-1.1.3
+
+GLOBFLAGS = CPU=68000
+
+FLAGS = NMINC STRMERGE UNSCHAR PARMS=REG IGNORE=104 NOCHKABORT \
+        DEFINE=REGISTERED NODEBUG DEFINE=NDEBUG $(GLOBFLAGS)
+
+OPTFLAGS = OPTGLOBAL OPTTIME OPTIMIZE
 
 
-FLAGS = NMINC STRMERGE UNSCHAR PARMS=REG CPU=68000 IGNORE=104 NOCHKABORT \
-        DEFINE=REGISTERED MATH=IEEE NODEBUG DEFINE=NDEBUG
-
-OPTFLAGS = $(FLAGS) OPTGLOBAL OPTTIME OPTIMIZE
-
-JPEGFLAGS = NOSTKCHK DATA=NEAR DEFINE=HAVE_STDC DEFINE=INCLUDES_ARE_ANSI \
-            DEFINE=AMIGA DEFINE=NO_MKTEMP DEFINE=NEED_SIGNAL_CATCHER \
-            DEFINE=SHORTxSHORT_32
-
-OBJS = io.o main.o wb.o win.o cli.o formats.o gfxbuffer.o efx.o \
+GFXCONOBJS = io.o main.o wb.o win.o cli.o formats.o gfxbuffer.o efx.o options.o \
  filbm.o fgif.o fpcx.o fgem.o ftiff.o fwgp.o frgb.o frgbn.o fimg.o fbmp.o fps.o \
- fjpeg.o ftga.o fcvp.o \
- jpsrc:jddeflts.o jpsrc:jrdjfif.o jpsrc:jmemmgr.o jpsrc:jdmaster.o \
- jpsrc:jdmcu.o jpsrc:jdpipe.o jpsrc:jdsample.o jpsrc:jquant1.o jpsrc:jdcolor.o \
- jpsrc:jquant2.o jpsrc:jdhuff.o jpsrc:jmemsys.o jpsrc:jbsmooth.o \
- jpsrc:jrevdct.o jpsrc:jutils.o jpsrc:jcdeflts.o jpsrc:jwrjfif.o \
- jpsrc:jcmaster.o jpsrc:jcmcu.o jpsrc:jchuff.o jpsrc:jccolor.o jpsrc:jcsample.o \
- jpsrc:jcexpand.o jpsrc:jcpipe.o jpsrc:jfwddct.o \
- jpsrc:jerror.o \
- glib:txtsys.o glib:txts.o \
- glib:libsys.o \
- glib:clean.o \
- glib:g1.o glib:g2.o glib:g2b.o glib:g3.o glib:g4.o glib:g5.o
+ fjpeg.o ftga.o fcvp.o fpng.o
 
 .c.o:
-  sc $(FLAGS) $(JPEGFLAGS) $*
+  sc $(FLAGS) $(OPTFLAGS) $*
 
-gc: $(OBJS)
-  slink <WITH <
-FROM lib:catch.o $(OBJS)
-TO gc
-LIBRARY lib:scmieee.lib lib:sc.lib lib:amiga.lib
-<
+
+LIBS = $(GLIBDIR)/glib.lib $(JPEGDIR)/libjpeg.lib $(PNGDIR)/libpng.lib $(ZLIBDIR)/z.lib
+
+all: gfxcon.bin
+
+gfxcon.bin: glib.FORCE libjpeg.FORCE gfxcon.MESSAGE $(GFXCONOBJS)
+   @echo " ----- Linking GfxCon (finally) ----- "
+   slink <WITH <
+   FROM lib:catch.o $(GFXCONOBJS)
+   TO gfxcon.bin
+   LIBRARY $(LIBS) lib:scm.lib lib:sc.lib lib:amiga.lib
+   <
+
+gfxcon.MESSAGE:
+   @echo " ----- Compiling GfxCon ----- "
+   assign png: $(PNGDIR)
+
+glib.FORCE:
+   assign glib: $(GLIBDIR)
+   execute < <
+   echo " ----- Compiling GLib ----- "
+   copy smakefile.glib $(GLIBDIR)
+   cd $(GLIBDIR)
+   smake -f smakefile.glib GLOBFLAGS=$(GLOBFLAGS) glib
+   <
+
+libjpeg.FORCE:
+   assign jpeg: $(JPEGDIR)
+   execute < <
+   echo " ----- Compiling JPEGlib ----- "
+   copy smakefile.jpeg $(JPEGDIR)
+   cd $(JPEGDIR)
+   smake -f smakefile.jpeg GLOBFLAGS=$(GLOBGLAGS) jpeglib
+   <
 

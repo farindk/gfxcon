@@ -627,7 +627,7 @@ BOOL CreateSpecialEffects(ULONG flags)
       ULONG newheight = ImageHeight * newwidth / ImageWidth;
 
 
-      // Wenns nicht paï¿½t, dann andersherum
+      // Wenns nicht paßt, dann andersherum
 
       if (newheight > Output_BoxfitHeight)
       {

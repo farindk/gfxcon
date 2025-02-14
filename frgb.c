@@ -31,10 +31,9 @@
  ********************************************************************************/
 
 
-
 #include "global.h"
+#include "options.h"
 
-extern BOOL  cli;
 extern ULONG inputwidth;
 
 void CheckForRGB(form fo)
@@ -73,25 +72,25 @@ static void AskWidth(ULONG *w,ULONG *height)
   if (BeginNewHandleTree())
   {
     ha=CrSmallWindow(
-	CrSpaceBox(
-	  CrHBox(
-	    CrText(Txt(TXT_WIDTH_COL_SPC),TAG_DONE),
-	    CrGadget(GAGA_Kind,INTEGER_KIND,
-		     GAGA_CallFunc,&EndWindow,
-		     GAGA_IN_Ptr,w,
-		     GAGA_ID	,1,
-		     GAGA_LowerBound,1,
-		     GAGA_UpperBound,99999,
-		     TAG_DONE,
-		     TAG_DONE),
-	    HANDLE_END
-	  )
-	),
-	WAWA_ActiveGad,1,
-	WAWA_Centered ,h,
-	TAG_DONE,
-	WA_Activate   ,TRUE,
-	TAG_DONE
+        CrSpaceBox(
+          CrHBox(
+            CrText(Txt(TXT_WIDTH_COL_SPC),TAG_DONE),
+            CrGadget(GAGA_Kind,INTEGER_KIND,
+                     GAGA_CallFunc,&EndWindow,
+                     GAGA_IN_Ptr,w,
+                     GAGA_ID    ,1,
+                     GAGA_LowerBound,1,
+                     GAGA_UpperBound,99999,
+                     TAG_DONE,
+                     TAG_DONE),
+            HANDLE_END
+          )
+        ),
+        WAWA_ActiveGad,1,
+        WAWA_Centered ,h,
+        TAG_DONE,
+        WA_Activate   ,TRUE,
+        TAG_DONE
       );
   }
   else
@@ -103,14 +102,14 @@ static void AskWidth(ULONG *w,ULONG *height)
     {
       if (OpenHandle(ha))
       {
-	HandleHandle(ha,NULL,NULL);
+        HandleHandle(ha,NULL,NULL);
 
-	CloseHandle(ha);
+        CloseHandle(ha);
 
-	FreeHandleTree(ha);
+        FreeHandleTree(ha);
       }
       else
-	ShowError();
+        ShowError();
     }
     else
       ShowError();
@@ -126,7 +125,7 @@ BOOL LoadRGB(void)
   struct ImageData *image=NULL;
   int x,y;
   UBYTE r,g,b;
-  BOOL	success=FALSE;
+  BOOL  success=FALSE;
 
   FileLength=GetLoadFileLength();
 
@@ -164,8 +163,8 @@ BOOL LoadRGB(void)
 
   if (!GuessW) return FALSE;
 
-  if (!cli) AskWidth(&GuessW,&GuessH);
-  else	    { if (inputwidth) GuessW=inputwidth; }
+  if (!CLImode) AskWidth(&GuessW,&GuessH);
+  else          { if (inputwidth) GuessW=inputwidth; }
 
   GuessH = FileLength/GuessW;
 

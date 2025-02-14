@@ -836,7 +836,7 @@ static BOOL WriteCode(short code,int codelength)
     bitstowrite = min(bitsleft,codeleft);
 
 
-    /* Bits ausschneiden, so daï¿½ sich die Bits nachher ganz rechts befinden */
+    /* Bits ausschneiden, so daß sich die Bits nachher ganz rechts befinden */
 
     mask = ((1<<bitstowrite)-1);
 
@@ -844,7 +844,7 @@ static BOOL WriteCode(short code,int codelength)
     codetowrite >>= bitstowrite;
 
 
-    /* Bits zu dem Byte links hinzufï¿½gen */
+    /* Bits zu dem Byte links hinzufügen */
 
     cuttedbits <<= 8-bitsleft;
     buildchar  |= cuttedbits;
@@ -932,18 +932,18 @@ static void InitCodeTable(int codesize)
   {
     codetable[i].code	  = i;
     codetable[i].childs   = NULL; /* noch leer */
- // codetable[i].next wird bei den ersten 1<<codesize Eintrï¿½gen nie benutzt */
+ // codetable[i].next wird bei den ersten 1<<codesize Einträgen nie benutzt */
   }
 }
 
 
 /*
   Algorithmus:
-    Die ersten 1<<codesize Eintrï¿½ge werden ganz normal als Tabelle benutzt.
-    Alle weiteren Tabelleneintrï¿½ge, die x als Prefix haben, sind durch
+    Die ersten 1<<codesize Einträge werden ganz normal als Tabelle benutzt.
+    Alle weiteren Tabelleneinträge, die x als Prefix haben, sind durch
     x->childs erreichbar, verkettet durch ->next.
 
-    Die beiden Eintrï¿½ge bei den Spezial-Codes bleiben unbenutzt.
+    Die beiden Einträge bei den Spezial-Codes bleiben unbenutzt.
 */
 
 
@@ -1158,7 +1158,7 @@ BOOL SaveGIF(void)
 
 
 
-  /* Graphic Control Extension schreiben, wenn Transparency benï¿½tigt wird */
+  /* Graphic Control Extension schreiben, wenn Transparency benötigt wird */
 
   if (background != -1)
   {

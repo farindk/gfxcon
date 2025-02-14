@@ -1,11 +1,11 @@
-Short:    Image format converter (V1.8f) for most formats.
-Uploader: farindk@trick.informatik.uni-stuttgart.de (Dirk Farin)
-Author:   farindk@trick.informatik.uni-stuttgart.de (Dirk Farin)
+Short:    Image format converter (V1.9) for many formats.
+Uploader: farin@ti.uni-mannheim.de (Dirk Farin)
+Author:   farin@ti.uni-mannheim.de (Dirk Farin)
 Type:     gfx/conv
 
 
-GfxCon V1.8f
-============
+GfxCon V1.9
+===========
 
 Image format converter that can load and save most formats:
 
@@ -17,18 +17,22 @@ Save: ILBM, PCX, GIF, JPEG, RGB-Raw, CVP, Postscript
 
 Features:
  - virtual memory built in (even with a plain 68000)
- - color-effects and simple transformations are possible
+ - simple color-effects and transformations
  - shows most information stored in images
  - runs from both shell and WB
  - has a nice GUI
  - font sensitiv
- - 68020-version included
  - runs on all amiga systems
 
 
 New:
+  V1.9  - JPEG part is now based on IJGs JPEGlib-6b. That means full
+          support for progressive and grayscale JPEGs.
+        - Source code is available (see separate archive "gfxcon_src.lha").
+
   V1.8f - BOXFIT bugfix: sometimes the image size exceeded the BOXFIT
           parameters
+
   V1.8e - CVP-format support
 
   V1.8d - JPEG streams not preceded by a JFIF header are recognized as JPEG

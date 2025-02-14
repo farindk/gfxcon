@@ -14,9 +14,10 @@
  *
  ********************************************************************************/
 
- #include "global.h"
+#include "global.h"
+#include "options.h"
 
-static char* v = "$VER: GfxCon 1.8f (25.Feb.99)";
+static char* v = "$VER: GfxCon 1.9 (03.Jul.99)";
 extern struct TextAttr bigfont;
 
 #define ID_LOAD_R    10
@@ -44,8 +45,7 @@ extern char Savename  [],Savename_g[],Savename_b[];
 
 #define Loadname_r Loadname
 #define Savename_r Savename
-
-
+#if 0
 ULONG loadmode   =FORM_JPEG,savemode   =FORM_ILBM;
 BOOL  Load_is_RGB=FALSE    ,Save_is_RGB=FALSE;
 
@@ -62,11 +62,11 @@ ULONG Output_Dither       = 1<<29;
 ULONG Output_FlipFlags    = 1<<29;
 ULONG Output_RotateFlags  = 1<<29;
 ULONG Output_ColorEffects = 1<<29;
-
+#endif
 static ULONG SetLoadName_r(void);
 static ULONG CheckDisableLoadNames(void);
 
-extern BOOL cli;  // ob das Programm vom CLI gestartet wurde
+// extern BOOL cli;  // ob das Programm vom CLI gestartet wurde
 
 
 void DoConversionMain(void)
@@ -113,7 +113,7 @@ void ShowProgress(int a,int b) { if (conversion_h) DisplayProgress(conversion_h,
                                  else if (!noprogress) printf("%d / %d\r",a,b); fflush(stdout); }
 void ShowMessage (char *txt)   { if (conversion_h) WriteTextLine  (conversion_h,textdisp_h,txt,-1);
                                  else              printf("%s\n",txt);       }
-void ShowInfo    (char *txt)   { if (!cli)         WriteTextLine  (info_h      ,infodisp_h,txt,-1);
+void ShowInfo    (char *txt)   { if (!CLImode)     WriteTextLine  (info_h      ,infodisp_h,txt,-1);
                                  else              printf("%s\n",txt); }
 
 static ULONG DoConversion(void)
@@ -237,7 +237,7 @@ static ULONG DoShowPrgInfos(void)
                                CrSpaceBox(
                                  CrSpaceVBox(
                                    CrText("GfxCon",ALT_TextAttr,&bigfont,TAG_DONE),
-                                   CrText("Version 1.8f",TAG_DONE),
+                                   CrText("Version 1.9",TAG_DONE),
 #ifdef _M68020
      CrText("(68020)",TAG_DONE),
 #else
@@ -257,7 +257,7 @@ static ULONG DoShowPrgInfos(void)
                            CrVBox(
                              CrText("Dirk Farin"    ,TAG_DONE),
                              CrText("Kapellenweg 15",TAG_DONE),
-                             CrText("72070 Tï¿½bingen",TAG_DONE),
+                             CrText("72070 Tübingen",TAG_DONE),
                              CrText("Germany"       ,TAG_DONE),
                              CrFiller(),
                              CrText("farindk@trick.informatik.uni-stuttgart.de",TAG_DONE),

@@ -68,10 +68,10 @@ void CheckForTGA(form fo)
   }
 
 
-  /* --- Altes Format; sichere Erkennung nicht mï¿½glich. --- */
+  /* --- Altes Format; sichere Erkennung nicht möglich. --- */
 
 
-  /* ColorMap-Type auf Konsistenz prï¿½fen */
+  /* ColorMap-Type auf Konsistenz prüfen */
 
   SeekPosLoad(1,Absolute);
 
@@ -86,7 +86,7 @@ void CheckForTGA(form fo)
   }
 
 
-  /* Image-Type auf Konsistenz prï¿½fen */
+  /* Image-Type auf Konsistenz prüfen */
 
   switch(ReadByte())
   {
@@ -360,7 +360,7 @@ BOOL LoadTGA(void)
   }
 
 
-  /* ImageID-Feld ï¿½berspringen */
+  /* ImageID-Feld überspringen */
 
   SeekPosLoad(IDlength,Relative);
 

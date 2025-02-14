@@ -36,6 +36,7 @@ extern void CheckForRGB8(form fo);
 extern void CheckForRGBN(form fo);
 extern void CheckForTGA (form fo);
 extern void CheckForCVP (form fo);
+extern void CheckForPNG (form fo);
 
 extern BOOL LoadILBM(void);
 extern BOOL LoadLBM (void);
@@ -55,6 +56,7 @@ extern BOOL LoadPS  (void);
 extern BOOL LoadJPEG(void);
 extern BOOL LoadTGA (void);
 extern BOOL LoadCVP (void);
+extern BOOL LoadPNG (void);
 
 extern BOOL SaveILBM(void);
 extern BOOL SaveLBM (void);
@@ -74,6 +76,7 @@ extern BOOL SavePS  (void);
 extern BOOL SaveJPEG(void);
 extern BOOL SaveTGA (void);
 extern BOOL SaveCVP (void);
+extern BOOL SavePNG (void);
 
 extern void PropsILBM(void);
 extern void PropsLBM (void);
@@ -93,6 +96,7 @@ extern void PropsPS  (void);
 extern void PropsJPEG(void);
 extern void PropsTGA (void);
 extern void PropsCVP (void);
+extern void PropsPNG (void);
 
 extern void InfoILBM(void);
 extern void InfoLBM (void);
@@ -112,6 +116,7 @@ extern void InfoPS  (void);
 extern void InfoJPEG(void);
 extern void InfoTGA (void);
 extern void InfoCVP (void);
+extern void InfoPNG (void);
 
 
 void CheckValid(form fo)
@@ -133,6 +138,7 @@ struct FormatObject FormatObjs[] =
   { "GIF"        ,"gif", 2 , FALSE , FORM_GIF     , &CheckForGIF  , &LoadGIF  , &SaveGIF  , &PropsGIF  , &InfoGIF  },
   { "TIFF"       ,"tif", 2 , FALSE , FORM_TIFF    , &CheckForTIFF , &LoadTIFF , NULL      , &PropsTIFF , &InfoTIFF },
   { "JPEG"       ,"jpg", 2 , FALSE , FORM_JPEG    , &CheckForJPEG , &LoadJPEG , &SaveJPEG , &PropsJPEG , &InfoJPEG },
+  { "PNG"        ,"png", 5 , FALSE , FORM_PNG     , &CheckForPNG  , &LoadPNG  , &SavePNG  , &PropsPNG  , &InfoPNG  },
   { "Targa"      ,"tga", 2 , FALSE , FORM_TGA     , &CheckForTGA  , &LoadTGA  , NULL      , &PropsTGA  , &InfoTGA  },
   { "CVP"        ,"cvp", 1 , FALSE , FORM_CVP     , &CheckForCVP  , &LoadCVP  , &SaveCVP  , &PropsCVP  , &InfoCVP  },
   { "RGB-Raw"    ,""   , 0 , TRUE  , FORM_RGB     , &CheckForRGB  , &LoadRGB  , &SaveRGB  , NULL       , &InfoRGB  },

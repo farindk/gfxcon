@@ -15,24 +15,10 @@
  ********************************************************************************/
 
 #include "global.h"
+#include "options.h"
 
 #include <libraries/asl.h>
 #include <proto/asl.h>
-
-#define MAX_FILENAME_LENGTH 200
-#define MAX_PATH_LENGTH     150
-#define MAX_FILE_LENGTH      50
-
-char Loadname  [MAX_FILENAME_LENGTH];
-char Loadname_g[MAX_FILENAME_LENGTH];
-char Loadname_b[MAX_FILENAME_LENGTH];
-char Savename  [MAX_FILENAME_LENGTH];
-char Savename_g[MAX_FILENAME_LENGTH];
-char Savename_b[MAX_FILENAME_LENGTH];
-
-#define Loadname_r Loadname
-#define Savename_r Savename
-
 
 static char LoadPath[MAX_PATH_LENGTH];
 static char SavePath[MAX_PATH_LENGTH];

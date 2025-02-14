@@ -214,7 +214,7 @@ static BOOL GarbageCollector(void)
 	}
 	else if (stripe->LockCnt >= 1)
 	{
-	  /* leider nichts mï¿½glich, da es benutzt wird ! */
+	  /* leider nichts möglich, da es benutzt wird ! */
 	}
 	else if (stripe->Height > 1)
 	{
@@ -1187,7 +1187,7 @@ BOOL GetRGBRow(struct ImageData *image,ULONG y,UBYTE *buffer[])
 
   UBYTE *rbufptr,*gbufptr,*bbufptr;
 
-  /* Buffer lï¿½schen */
+  /* Buffer löschen */
 
   for (x=0;x<((image->Width+15) & ~15)/8;x++)
     for (p=0;p<24;p++)
@@ -1824,7 +1824,7 @@ BOOL FloydDither(LONG x,LONG y,UBYTE r,UBYTE g,UBYTE b)
   blue_err  = ((int)exact_b) - ((int)b);
 
 
-  red_dist=green_dist=blue_dist=0; /* schon verteilten Fehler rï¿½cksetzen */
+  red_dist=green_dist=blue_dist=0; /* schon verteilten Fehler rücksetzen */
 
 
   /* --- rechts --- */
@@ -1837,7 +1837,7 @@ BOOL FloydDither(LONG x,LONG y,UBYTE r,UBYTE g,UBYTE b)
   { setx=x+1; sety=y; }
   else
   {
-    setx=0; sety=y+1;	  /* wenn rechts am Rand, dann auf nï¿½chste Zeile links */
+    setx=0; sety=y+1;	  /* wenn rechts am Rand, dann auf nächste Zeile links */
   }
   if (sety <= MaxImageY)
   {
@@ -1934,7 +1934,7 @@ BOOL FastFloydDither(LONG x,LONG y,UBYTE r,UBYTE g,UBYTE b)
   { setx=x+1; sety=y; }
   else
   {
-    setx=0; sety=y+1;	  /* wenn rechts am Rand, dann auf nï¿½chste Zeile links */
+    setx=0; sety=y+1;	  /* wenn rechts am Rand, dann auf nächste Zeile links */
   }
   if (sety <= MaxImageY)
   {

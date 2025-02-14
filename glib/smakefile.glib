@@ -1,0 +1,26 @@
+
+# note: as SAS 6.50 seems to produce wrong code on the files in "glib:" when
+#       opimizing, you unfortunately have to turn optimization off.
+
+
+FLAGS = NMINC STRMERGE UNSCHAR PARMS=REG IGNORE=104 NOCHKABORT \
+        DEFINE=REGISTERED NODEBUG DEFINE=NDEBUG $(GLOBFLAGS)
+
+OPTFLAGS = # OPTGLOBAL OPTTIME OPTIMIZE
+
+
+GLIBOBJS = txtsys.o txts.o libsys.o clean.o \
+           g1.o g2.o g2b.o g3.o g4.o g5.o
+
+.c.o:
+  sc $(FLAGS) $(OPTFLAGS) $*
+
+
+glib: glib.lib
+
+glib.lib: $(GLIBOBJS)
+   oml glib.lib r $(GLIBOBJS)
+
+
+
+

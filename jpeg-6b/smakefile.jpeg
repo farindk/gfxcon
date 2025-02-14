@@ -1,0 +1,6 @@
+
+jpeglib: libjpeg.lib
+    smake -f makefile.sas libjpeg.lib
+
+
+
